@@ -6,6 +6,7 @@ Un outil de dictée vocale pour Linux utilisant [Whisper](https://github.com/ope
 
 - Appui sur F9 pour dicter, F9 à nouveau pour arrêter
 - Transcription en français (et autres langues) avec Whisper turbo sur GPU
+- Détection automatique de la langue ou langue forcée *(configurable)*
 - Polish automatique de la ponctuation via API Mistral *(optionnel)*
 - Injection du texte directement dans n'importe quelle application (LibreOffice, VS Code, etc.)
 - 100% local pour la transcription — aucune donnée envoyée sans accord
@@ -38,7 +39,7 @@ git clone https://github.com/IDinaMoinzadeh/whisper-dictation.git
 cd whisper-dictation
 ```
 
-### 4. Configurer la clé API *(optionnel — pour le polish)*
+### 4. Configuration
 
 Créer un fichier `~/.env` :
 
@@ -46,13 +47,20 @@ Créer un fichier `~/.env` :
 nano ~/.env
 ```
 
-Et ajouter une clé Mistral :
+Et y ajouter :
 
 ```
 MISTRAL_API_KEY=clé_ici
+DICTATION_LANGUAGE=fr
 ```
 
-> Sans clé API, le script fonctionne quand même — la transcription brute de Whisper s'affiche sans correction de ponctuation.
+**Options de configuration :**
+
+- `MISTRAL_API_KEY` *(optionnel)* — Clé API Mistral pour le polish de ponctuation. Sans cette clé, le script fonctionne quand même mais sans correction automatique de ponctuation.
+- `DICTATION_LANGUAGE` — Langue de transcription :
+  - `fr` : français forcé
+  - `en` : anglais forcé
+  - `auto` : détection automatique (utile pour les textes multilingues)
 
 ## 🚀 Utilisation
 
@@ -63,7 +71,7 @@ python3 whisper_dictation.py
 Puis :
 1. Cliquer dans l'application où dicter (LibreOffice, VS Code...)
 2. Appuyer sur **F9** pour commencer
-3. Parler en français
+3. Parler
 4. Appuyer sur **F9** pour arrêter — le texte apparaît automatiquement
 
 ### Commandes vocales de ponctuation

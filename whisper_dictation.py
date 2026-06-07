@@ -19,6 +19,10 @@ from pynput import keyboard
 # Chargement de la clé API depuis ~/.env
 load_dotenv(os.path.expanduser("~/.env"))
 api_key = os.getenv("MISTRAL_API_KEY")
+
+dictation_language = os.getenv("DICTATION_LANGUAGE", "fr")
+if dictation_language == "auto":
+    dictation_language = None
     
     if not api_key:
     print("⚠️  Clé MISTRAL_API_KEY introuvable dans ~/.env — le script fonctionnera sans polish")
@@ -92,7 +96,7 @@ def stop_and_transcribe():
         time.sleep(0.5)
 
         try:
-            result = model.transcribe(temp_file, language="fr", fp16=True)
+            result = model.transcribe(temp_file, language=dictation_language, fp16=True)
             text = result["text"].strip()
             print(f"📝 Brut : {text}")
 
